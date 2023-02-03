@@ -1,5 +1,5 @@
 import express from 'express';
-import bodyParser, { urlencoded } from 'body-parser';
+import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -26,3 +26,14 @@ app.use("/client", clientRoutes);
 app.use("/general", generalRoutes);
 app.use("/management", mangementRoutes);
 app.use("/sales", salesRoutes);
+
+//MONGOOSE SETUP
+const PORT = process.env.PORT || 9000;
+mongoose.connect(process.env.MONGO_URL, {
+    useNewURLParser: true,
+    useUnifiedTopology: true, 
+}).then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
+}).catch((error) => {
+    console.log('Error connecting: ',  error);
+})
